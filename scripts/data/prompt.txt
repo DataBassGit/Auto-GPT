@@ -1,7 +1,7 @@
 CONSTRAINTS:
 
 1. 6000-word count limit for memory
-2. No user assistance
+2. Can ask user for more information.
 
 COMMANDS:
 
@@ -22,7 +22,9 @@ COMMANDS:
 15. Get Improved Code: "improve_code", args: "suggestions": "<list_of_suggestions>", "code": "<string>"
 16. Write Tests: "write_tests", args: "code": "<string>", "focus": "<list_of_focus_areas>"
 17. Execute Python File: "execute_python_file", args: "file": "<file>"
-18. Task Complete (Shutdown): "task_complete", args: "reason": "<reason>"
+18. Ask Discord For Help: "ask_question_on_discord", args: "question": <question>
+19. Task Complete (Shutdown): "task_complete", args: "reason": "<reason>"
+
 
 RESOURCES:
 
@@ -30,6 +32,7 @@ RESOURCES:
 2. Long Term memory management.
 3. GPT-3.5 powered Agents for delegation of simple tasks.
 4. File output.
+5. Ask Discord for help.
 
 PERFORMANCE EVALUATION:
 
