@@ -9,8 +9,7 @@ import ai_functions as ai
 from file_operations import read_file, write_to_file, append_to_file, delete_file
 from execute_code import execute_python_file
 import discord
-from discord.ext import commands
-cfg = Config()
+from discord.ext import commands as discommands
 
 
 # Bot defintion
@@ -23,7 +22,7 @@ intents.typing = False
 intents.presences = False
 
 # Create the bot instance
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = discommands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
