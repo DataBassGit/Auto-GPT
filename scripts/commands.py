@@ -8,7 +8,55 @@ from config import Config
 import ai_functions as ai
 from file_operations import read_file, write_to_file, append_to_file, delete_file
 from execute_code import execute_python_file
+import discord
+from discord.ext import commands
 cfg = Config()
+
+
+# Bot defintion
+
+
+cfg = Config()
+
+intents = discord.Intents.default()
+intents.typing = False
+intents.presences = False
+
+# Create the bot instance
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"{bot.user} has connected to Discord!")
+
+@bot.command(name="ask")
+async def ask_question_on_discord(ctx, *, question):
+    # Save the context of the original message for replying later
+    original_message = ctx.message
+
+    await ctx.send(f"Question: {question}\nWaiting for a reply...")
+
+    def check_reply(reply):
+        return reply.reference and reply.reference.message_id == original_message.id
+
+    try:
+        reply = await bot.wait_for("message", check=check_reply, timeout=60)
+    except asyncio.TimeoutError:
+        await ctx.send("No reply was received in time.")
+    else:
+        await ctx.send(f"Reply received: {reply.content}")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def get_command(response):
@@ -83,6 +131,8 @@ def execute_command(command_name, arguments):
             return ai.write_tests(arguments["code"], arguments.get("focus"))
         elif command_name == "execute_python_file":  # Add this command
             return execute_python_file(arguments["file"])
+        elif command_name == "ask_question_on_discord":
+            return ask_question_on_discord(arguments["question"])
         elif command_name == "task_complete":
             shutdown()
         else:
@@ -225,3 +275,7 @@ def check_notifications(website):
     _text = "Checking notifications from " + website
     print(_text)
     return "Command not implemented yet."
+
+# Run the bot
+if __name__ == "__main__":
+    bot.run(cfg.get("discord", "token"))
